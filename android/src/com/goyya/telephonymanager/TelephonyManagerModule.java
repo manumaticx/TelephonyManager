@@ -256,7 +256,6 @@ public class TelephonyManagerModule extends KrollModule
 	}
 	
 	@Kroll.method
-	@Kroll.setProperty
 	public boolean setPreferredNetworkTypeToGlobal(){
 		return getManager().setPreferredNetworkTypeToGlobal();
 	}
