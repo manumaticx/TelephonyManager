@@ -38,8 +38,7 @@ console.log('isSmsCapable:          ' + telephonymanager.isSmsCapable);
 console.log('isVoiceCapable:        ' + telephonymanager.isVoiceCapable);
 ```
 
-NOTE: This module automatically adds the `READ_PHONE_STATE` permission to your manifest. If you are using methods of the TelephonyManager that are requiring any other permission, please add it manually to your tiapp.xml
----
+> NOTE: This module automatically adds the `READ_PHONE_STATE` permission to your manifest. If you are using methods of the TelephonyManager that are requiring any other permission, please add it manually to your tiapp.xml
 
 ## License
 
