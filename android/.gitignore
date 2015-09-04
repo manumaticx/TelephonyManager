@@ -1,0 +1,11 @@
+.DS_Store
+tmp
+bin
+build
+.apt_generated
+.project
+.classpath
+.settings
+libs
+build.properties
+*.apk
