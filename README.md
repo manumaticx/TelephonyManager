@@ -5,6 +5,8 @@
 
 This module exposes the Android [TelephonyManager](http://developer.android.com/reference/android/telephony/TelephonyManager.html) to Titanium.
 
+(If you are looking for something similar for iOS you should check out David Bankier's [CoreTelephony ](https://github.com/dbankier/CoreTelephony-for-Appcelerator-Titanium) module)
+
 ## Quick Start
 
 ### Installation 
