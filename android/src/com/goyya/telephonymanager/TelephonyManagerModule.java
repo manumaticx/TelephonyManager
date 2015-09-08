@@ -24,8 +24,19 @@ public class TelephonyManagerModule extends KrollModule
 	private static final boolean DBG = TiConfig.LOGD;
 	private static TelephonyManager tm;
 	private PhoneStateListener psl;
+	private int events = PhoneStateListener.LISTEN_NONE;
 	
 	// constants
+	@Kroll.constant public static final String EVENT_CALL_FORWARDING_INDICATOR = "callForwardingIndicator";
+	@Kroll.constant public static final String EVENT_CALL_STATE = "callState";
+	@Kroll.constant public static final String EVENT_CELL_INFO = "cellInfo";
+	@Kroll.constant public static final String EVENT_CELL_LOCATION = "cellLocation";
+	@Kroll.constant public static final String EVENT_DATA_ACTIVITY = "dataActivity";
+	@Kroll.constant public static final String EVENT_DATA_CONNECTION_STATE = "dataConnectionState";
+	@Kroll.constant public static final String EVENT_MESSAGE_WAITING_INDICATOR = "messageWaitingIndicator";
+	@Kroll.constant public static final String EVENT_SERVICE_STATE = "serviceState";
+	@Kroll.constant public static final String EVENT_SIGNAL_STRENGTHS = "signalStrengths";
+	
 	@Kroll.constant public static final int CALL_STATE_RINGING = TelephonyManager.CALL_STATE_RINGING;
 	@Kroll.constant public static final int CALL_STATE_OFFHOOK = TelephonyManager.CALL_STATE_OFFHOOK;
 	@Kroll.constant public static final int CALL_STATE_IDLE = TelephonyManager.CALL_STATE_IDLE;
@@ -62,6 +73,108 @@ public class TelephonyManagerModule extends KrollModule
 		
 		tm = (TelephonyManager) TiApplication.getAppRootOrCurrentActivity().getSystemService(Context.TELEPHONY_SERVICE);
 		return tm;
+	}
+	
+	private PhoneStateListener getListener(){
+		if (psl != null){
+			return psl;
+		}
+		
+		psl = new PhoneStateListener(){
+			
+			@Override
+			public void onCallForwardingIndicatorChanged (boolean cfi){
+				if (hasListeners(EVENT_CALL_FORWARDING_INDICATOR)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("cfi", cfi);
+    			fireEvent(EVENT_CALL_FORWARDING_INDICATOR, event);
+    		}
+			}
+			
+			@Override
+			public void onCallStateChanged (int state, String incomingNumber){
+				if (hasListeners(EVENT_CALL_STATE)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("incomingNumber", incomingNumber);
+    			fireEvent(EVENT_CALL_STATE, event);
+    		}
+			}
+			
+			@Override
+			public void onCellInfoChanged (List<CellInfo> cellInfo){
+				if (hasListeners(EVENT_CELL_INFO)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			// TODO: add helper to convert CellInfo
+    			fireEvent(EVENT_CELL_INFO, event);
+    		}
+			}
+			
+			@Override
+			public void onCellLocationChanged (CellLocation location){
+				if (hasListeners(EVENT_CELL_LOCATION)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			// TODO: add helper to convert CellLocation
+    			fireEvent(EVENT_CELL_LOCATION, event);
+    		}
+			}
+			
+			@Override
+			public void onDataActivity (int direction){
+				if (hasListeners(EVENT_DATA_ACTIVITY)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("direction", direction);
+    			fireEvent(EVENT_DATA_ACTIVITY, event);
+    		}
+			}
+			
+			@Override
+			public void onDataConnectionStateChanged (int state){
+				if (hasListeners(EVENT_DATA_CONNECTION_STATE)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("state", state);
+    			fireEvent(EVENT_DATA_CONNECTION_STATE, event);
+    		}
+			}
+			
+			@Override
+			public void onDataConnectionStateChanged (int state, int networkType){
+				if (hasListeners(EVENT_DATA_CONNECTION_STATE)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("state", state);
+					event.put("networkType", networkType);
+    			fireEvent(EVENT_DATA_CONNECTION_STATE, event);
+    		}
+			}
+			
+			@Override
+			public void onMessageWaitingIndicatorChanged (boolean mwi){
+				if (hasListeners(EVENT_MESSAGE_WAITING_INDICATOR)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			event.put("mwi", mwi);
+    			fireEvent(EVENT_MESSAGE_WAITING_INDICATOR, event);
+    		}
+			}
+			
+			@Override
+			public void onServiceStateChanged (ServiceState serviceState){
+				if (hasListeners(EVENT_SERVICE_STATE)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			// TODO: add helper to convert ServiceState
+    			fireEvent(EVENT_SERVICE_STATE, event);
+    		}
+			}
+			
+			@Override
+			public void onSignalStrengthsChanged (SignalStrength signalStrength){
+				if (hasListeners(EVENT_SIGNAL_STRENGTHS)) {
+    			HashMap<String, Object> event = new HashMap<String, Object>();
+    			// TODO: add helper to convert SignalStrength
+    			fireEvent(EVENT_SIGNAL_STRENGTHS, event);
+    		}
+			}
+		};
+		
+		return psl;
 	}
 
 	@Kroll.onAppCreate
@@ -263,6 +376,44 @@ public class TelephonyManagerModule extends KrollModule
 	@Kroll.setProperty
 	public boolean setVoiceMailNumber(String alphaTag, String number){
 		return getManager().setVoiceMailNumber(alphaTag, number);
+	}
+	
+	// Event Listeners
+	@Override
+	public void listenerAdded(String type, int count, KrollProxy proxy) {
+		events |= getEventFlag(type);
+		getManager().listen(getListener(), events);
+	}
+
+	@Override
+	public void listenerRemoved(String type, int count, KrollProxy proxy) {
+		events &= ~getEventFlag(type);
+		getManager().listen(getListener(), events);
+	}
+	
+	private int getEventFlag(String eventName){
+		switch (eventName) {
+				case EVENT_CALL_FORWARDING_INDICATOR:
+				 	return PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR;
+				case EVENT_CALL_STATE:
+				   return PhoneStateListener.LISTEN_CALL_STATE;
+				case EVENT_CELL_INFO:
+						return PhoneStateListener.LISTEN_CELL_INFO;
+				case EVENT_CELL_LOCATION:
+					 return PhoneStateListener.LISTEN_CELL_LOCATION;
+				case EVENT_DATA_ACTIVITY:
+					return PhoneStateListener.LISTEN_DATA_ACTIVITY;
+				case EVENT_DATA_CONNECTION_STATE:
+					return PhoneStateListener.LISTEN_DATA_CONNECTION_STATE;
+				case EVENT_MESSAGE_WAITING_INDICATOR:
+					return PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR;
+				case EVENT_SERVICE_STATE:
+					return PhoneStateListener.LISTEN_SERVICE_STATE;
+				case EVENT_SIGNAL_STRENGTHS:
+					return PhoneStateListener.LISTEN_SIGNAL_STRENGTHS;
+        default:
+         return PhoneStateListener.LISTEN_NONE;
+     }
 	}
 	
 }
