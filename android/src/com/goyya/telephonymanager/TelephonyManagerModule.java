@@ -5,16 +5,23 @@
 package com.goyya.telephonymanager;
 
 import org.appcelerator.kroll.KrollModule;
+import org.appcelerator.kroll.KrollProxy;
 import org.appcelerator.kroll.annotations.Kroll;
-
 import org.appcelerator.titanium.TiApplication;
 import org.appcelerator.kroll.common.Log;
 import org.appcelerator.kroll.common.TiConfig;
+
+import java.util.List;
+import java.util.HashMap;
 
 import android.os.Build;
 import android.content.Context;
 import android.telephony.TelephonyManager;
 import android.telephony.PhoneStateListener;
+import android.telephony.CellInfo;
+import android.telephony.CellLocation;
+import android.telephony.ServiceState;
+import android.telephony.SignalStrength;
 
 @Kroll.module(name = "TelephonyManager", id = "com.goyya.telephonymanager")
 public class TelephonyManagerModule extends KrollModule {
