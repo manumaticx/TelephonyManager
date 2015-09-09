@@ -42,6 +42,89 @@ console.log('isVoiceCapable:        ' + telephonymanager.isVoiceCapable);
 
 > NOTE: This module automatically adds the `READ_PHONE_STATE` permission to your manifest. If you are using methods of the TelephonyManager that are requiring any other permission, please add it manually to your tiapp.xml
 
+## API Documentation
+
+### Properties
+
+* `callState` _(Number)_
+  * `CALL_STATE_RINGING`
+  * `CALL_STATE_OFFHOOK`
+  * `CALL_STATE_IDLE`
+* `dataActivity` _(Number)_
+  * `DATA_ACTIVITY_NONE`
+  * `DATA_ACTIVITY_IN`
+  * `DATA_ACTIVITY_OUT`
+  * `DATA_ACTIVITY_INOUT`
+  * `DATA_ACTIVITY_DORMANT`
+* `dataState` _(Number)_
+  * `DATA_DISCONNECTED`
+  * `DATA_CONNECTING`
+  * `DATA_CONNECTED`
+  * `DATA_SUSPENDED`
+* `deviceId` _(String)_
+* `deviceSoftwareVersion` _(String)_
+* `groupIdLevel1` _(String)_
+* `line1Number` _(String)_
+* `mmsUAProfUrl` _(String)_
+* `mmsUserAgent` _(String)_
+* `networkCountryIso` _(String)_
+* `networkOperator` _(String)_
+* `networkOperatorName` _(String)_
+* `networkType` _(Number)_
+  * `NETWORK_TYPE_1xRTT`
+  * `NETWORK_TYPE_CDMA`
+  * `NETWORK_TYPE_EDGE`
+  * `NETWORK_TYPE_EHRPD`
+  * `NETWORK_TYPE_EVDO_0`
+  * `NETWORK_TYPE_EVDO_A`
+  * `NETWORK_TYPE_EVDO_B`
+  * `NETWORK_TYPE_GPRS`
+  * `NETWORK_TYPE_HSDPA`
+  * `NETWORK_TYPE_HSPA`
+  * `NETWORK_TYPE_HSPAP`
+  * `NETWORK_TYPE_HSUPA`
+  * `NETWORK_TYPE_IDEN`
+  * `NETWORK_TYPE_LTE`
+  * `NETWORK_TYPE_UMTS`
+  * `NETWORK_TYPE_UNKNOWN`
+* `phoneType` _(Number)_
+  * `PHONE_TYPE_NONE`
+  * `PHONE_TYPE_GSM`
+  * `PHONE_TYPE_CDMA`
+  * `PHONE_TYPE_SIP`
+* `simCountryIso` _(String)_
+* `simOperator` _(String)_
+* `simOperatorName` _(String)_
+* `simSerialNumber` _(String)_
+* `simState` _(Number)_
+  * `SIM_STATE_UNKNOWN`
+  * `SIM_STATE_ABSENT`
+  * `SIM_STATE_PIN_REQUIRED`
+  * `SIM_STATE_PUK_REQUIRED`
+  * `SIM_STATE_NETWORK_LOCKED`
+  * `SIM_STATE_READY`
+* `subscriberId` _(String)_
+* `voiceMailAlphaTag` _(String)_
+* `voiceMailNumber` _(String)_
+* `hasCarrierPrivileges` _(Boolean)_
+* `hasIccCard` _(Boolean)_
+* `isNetworkRoaming` _(Boolean)_
+* `isSmsCapable` _(Boolean)_
+* `isVoiceCapable` _(Boolean)_
+
+
+### Events
+
+* `callForwardingIndicator`
+* `callState` 
+* `cellInfo`
+* `cellLocation`
+* `dataActivity`
+* `dataConnectionState`
+* `messageWaitingIndicator`
+* `serviceState`
+* `signalStrengths`
+
 ## License
 
 [The MIT License (MIT)](LICENSE)

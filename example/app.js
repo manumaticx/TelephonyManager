@@ -1,5 +1,14 @@
 var telephonymanager = require('com.goyya.telephonymanager');
 
+telephonymanager.addEventListener('callState', function(e){
+  console.log('callState changed to: ' + e.state
+            + '\nincomingNumber: ' + e.incomingNumber);
+  // e.state is on of: 
+  // - telephonymanager.CALL_STATE_RINGING
+  // - telephonymanager.CALL_STATE_OFFHOOK
+  // - telephonymanager.CALL_STATE_IDLE
+});
+
 console.log('callState:             ' + telephonymanager.callState);
 console.log('dataActivity:          ' + telephonymanager.dataActivity);
 console.log('dataState:             ' + telephonymanager.dataState);
