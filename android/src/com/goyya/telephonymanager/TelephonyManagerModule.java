@@ -126,6 +126,7 @@ public class TelephonyManagerModule extends KrollModule {
 			public void onCallStateChanged(int state, String incomingNumber) {
 				if (hasListeners(EVENT_CALL_STATE)) {
 					HashMap<String, Object> event = new HashMap<String, Object>();
+					event.put("state", state);
 					event.put("incomingNumber", incomingNumber);
 					fireEvent(EVENT_CALL_STATE, event);
 				}
