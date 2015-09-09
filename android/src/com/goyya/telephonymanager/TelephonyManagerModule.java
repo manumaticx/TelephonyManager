@@ -423,28 +423,43 @@ public class TelephonyManagerModule extends KrollModule {
 	}
 
 	private int getEventFlag(String eventName) {
-		switch (eventName) {
-		case EVENT_CALL_FORWARDING_INDICATOR:
+		if (eventName.equals(EVENT_CALL_FORWARDING_INDICATOR)){
 			return PhoneStateListener.LISTEN_CALL_FORWARDING_INDICATOR;
-		case EVENT_CALL_STATE:
-			return PhoneStateListener.LISTEN_CALL_STATE;
-		case EVENT_CELL_INFO:
-			return PhoneStateListener.LISTEN_CELL_INFO;
-		case EVENT_CELL_LOCATION:
-			return PhoneStateListener.LISTEN_CELL_LOCATION;
-		case EVENT_DATA_ACTIVITY:
-			return PhoneStateListener.LISTEN_DATA_ACTIVITY;
-		case EVENT_DATA_CONNECTION_STATE:
-			return PhoneStateListener.LISTEN_DATA_CONNECTION_STATE;
-		case EVENT_MESSAGE_WAITING_INDICATOR:
-			return PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR;
-		case EVENT_SERVICE_STATE:
-			return PhoneStateListener.LISTEN_SERVICE_STATE;
-		case EVENT_SIGNAL_STRENGTHS:
-			return PhoneStateListener.LISTEN_SIGNAL_STRENGTHS;
-		default:
-			return PhoneStateListener.LISTEN_NONE;
 		}
+		
+		if (eventName.equals(EVENT_CALL_STATE)){
+			return PhoneStateListener.LISTEN_CALL_STATE;
+		}
+		
+		if (eventName.equals(EVENT_CELL_INFO)){
+			return PhoneStateListener.LISTEN_CELL_INFO;
+		}
+		
+		if (eventName.equals(EVENT_CELL_LOCATION)){
+			return PhoneStateListener.LISTEN_CELL_LOCATION;
+		}
+		
+		if (eventName.equals(EVENT_DATA_ACTIVITY)){
+			return PhoneStateListener.LISTEN_DATA_ACTIVITY;
+		}
+		
+		if (eventName.equals(EVENT_DATA_CONNECTION_STATE)){
+			return PhoneStateListener.LISTEN_DATA_CONNECTION_STATE;
+		}
+		
+		if (eventName.equals(EVENT_MESSAGE_WAITING_INDICATOR)){
+			return PhoneStateListener.LISTEN_MESSAGE_WAITING_INDICATOR;
+		}
+		
+		if (eventName.equals(EVENT_SERVICE_STATE)){
+			return PhoneStateListener.LISTEN_SERVICE_STATE;
+		}
+		
+		if (eventName.equals(EVENT_SIGNAL_STRENGTHS)){
+			return PhoneStateListener.LISTEN_SIGNAL_STRENGTHS;
+		}
+		
+		return PhoneStateListener.LISTEN_NONE;
 	}
 
 }
