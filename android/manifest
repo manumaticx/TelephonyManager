@@ -2,9 +2,9 @@
 # this is your module manifest and used by Titanium
 # during compilation, packaging, distribution, etc.
 #
-version: 1.0.1
-apiversion: 2
-architectures: armeabi armeabi-v7a x86
+version: 2.0.0
+apiversion: 4
+architectures: arm64-v8a armeabi-v7a x86
 description: TelephonyManager
 author: Manuel Lehner
 license: MIT
@@ -15,4 +15,4 @@ name: TelephonyManager
 moduleid: com.goyya.telephonymanager
 guid: dafe8862-2963-4f59-9d8c-f25e62ef1b7e
 platform: android
-minsdk: 4.1.0.GA
+minsdk: 7.5.0.GA
